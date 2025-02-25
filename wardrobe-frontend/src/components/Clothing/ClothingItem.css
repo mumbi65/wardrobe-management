@@ -1,0 +1,32 @@
+.clothing-item {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .clothing-item h3 {
+    margin-top: 0;
+  }
+  
+  .clothing-item button {
+    margin-right: 10px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .clothing-item button:hover {
+    background-color: #0056b3;
+  }
+  
+  .clothing-item button:last-child {
+    background-color: #dc3545;
+  }
+  
+  .clothing-item button:last-child:hover {
+    background-color: #c82333;
+  }

@@ -1,0 +1,13 @@
+.dashboard-container {
+    padding: 20px;
+  }
+  
+  .dashboard-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .clothing-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
