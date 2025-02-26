@@ -11,7 +11,10 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ClothingItemSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    category = CategorySerializer(read_only=True)
+    category_detail = CategorySerializer(source='category', read_only=True)
+    category_id = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all(), source='category', write_only=True
+    )
 
     class Meta:
         model = ClothingItem

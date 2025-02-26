@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../api/axiosInstance';
 import './DeleteClothing.css';
 
 const DeleteClothing: React.FC = () => {
@@ -8,8 +8,8 @@ const DeleteClothing: React.FC = () => {
   const handleDeleteClothing = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.delete(`/api/clothing/${id}`);
-      if (response.data.success) {
+      const response = await axiosInstance.delete(`/clothing-items/${id}/`);
+      if (response.status === 204) {
         alert('Clothing item deleted successfully');
         setId('');
       } else {

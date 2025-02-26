@@ -8,7 +8,8 @@ import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import AddClothing from './components/Clothing/AddClothing';
 import NotFound from './components/Pages/NotFound';
-import './App.css';
+import EditClothing from './components/Clothing/EditClothing';
+// import './App.css';
 
 const App: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/add-clothing" element={<AddClothing />} />
+            <Route path="/edit-clothing/:id" element={<EditClothing />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

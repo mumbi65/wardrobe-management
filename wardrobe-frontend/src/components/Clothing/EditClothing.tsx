@@ -1,41 +1,73 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+import axiosInstance from '../../api/axiosInstance';
 import './EditClothing.css';
 
-interface EditClothingProps {
+interface Category {
   id: number;
-  onEditSuccess: () => void;
+  name: string;
 }
 
-const EditClothing: React.FC<EditClothingProps> = ({ id, onEditSuccess }) => {
+interface ClothingItemData {
+  name: string;
+  description: string;
+  category: Category;
+}
+
+interface EditClothingProps {
+  onEditSuccess?: () => void; // optional callback
+}
+
+const EditClothing: React.FC<EditClothingProps> = ({ onEditSuccess }) => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('tops');
+  const [categoryId, setCategoryId] = useState<number>(1);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchClothingItem = async () => {
       try {
-        const response = await axios.get(`/api/clothing/${id}`);
-        const { name, description, category } = response.data;
-        setName(name);
-        setDescription(description);
-        setCategory(category);
+        const response = await axiosInstance.get(`/clothing-items/${id}/`);
+        const data: ClothingItemData = response.data;
+        console.log("Fetched clothing item:", data);
+        setName(data.name);
+        setDescription(data.description);
+        setCategoryId(data.category && data.category.id ? data.category.id : 1);
       } catch (error) {
         console.error('Error fetching clothing item', error);
       }
     };
 
-    fetchClothingItem();
+    const fetchCategories = async () => {
+      try {
+        const response = await axiosInstance.get('/categories/');
+        console.log("Fetched categories:", response.data);
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching categories', error);
+      }
+    };
+
+    if (id) {
+      fetchClothingItem();
+      fetchCategories();
+    }
   }, [id]);
 
   const handleEditClothing = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const updatedClothing = { name, description, category };
-      const response = await axios.put(`/api/clothing/${id}`, updatedClothing);
-      if (response.data.success) {
+      const updatedClothing = { name, description, category_id: categoryId };
+      console.log("Payload:", updatedClothing);
+      const response = await axiosInstance.put(`/clothing-items/${id}/`, updatedClothing);
+      if (response.status === 200) {
         alert('Clothing item updated successfully');
-        onEditSuccess();
+        navigate('/dashboard');
+        if (onEditSuccess) {
+          onEditSuccess();
+        }
       } else {
         alert('Failed to update clothing item');
       }
@@ -45,9 +77,9 @@ const EditClothing: React.FC<EditClothingProps> = ({ id, onEditSuccess }) => {
   };
 
   return (
-    <div className="edit-clothing-container">
-      <h2>Edit Clothing Item</h2>
+    <div className="edit-clothing-container">  
       <form onSubmit={handleEditClothing}>
+      <h2>Edit Clothing Item</h2>
         <div className="input-group">
           <input
             type="text"
@@ -68,13 +100,29 @@ const EditClothing: React.FC<EditClothingProps> = ({ id, onEditSuccess }) => {
         </div>
         <div className="input-group">
           <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+             value={categoryId}
+             onChange={(e) => {
+               const newValue = Number(e.target.value);
+               console.log("Selected category id:", newValue);
+               setCategoryId(newValue);
+             }}
             required
           >
-            <option value="tops">Tops</option>
-            <option value="bottoms">Bottoms</option>
-            <option value="shoes">Shoes</option>
+            {categories.length > 0 ? (
+              categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))
+            ) : (
+              <>
+                <option value={1}>Tops</option>
+                <option value={2}>Bottoms</option>
+                <option value={3}>Shoes</option>
+                <option value={4}>Outwear</option>
+                <option value={5}>Accessories</option>
+              </>
+            )}
           </select>
         </div>
         <button type="submit">Update Clothing</button>

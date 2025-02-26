@@ -1,25 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '../../api/axiosInstance';
 import ClothingItem from '../Clothing/ClothingItem';
 import Filter from '../Filter/Filter';
 import Search from '../Filter/Search';
 import './Dashboard.css';
 
+
+interface Category {
+  id: number;
+  name: string;
+}
+
 interface ClothingItem {
   id: number;
   name: string;
   description: string;
-  category: string;
+  category_detail: Category;
 }
 
 const Dashboard: React.FC = () => {
   const [clothingItems, setClothingItems] = useState<ClothingItem[]>([]);
   const [filteredItems, setFilteredItems] = useState<ClothingItem[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchClothingItems = async () => {
       try {
-        const response = await axios.get('/api/clothing');
+        const response = await axiosInstance.get('/clothing-items/');
         setClothingItems(response.data);
         setFilteredItems(response.data);
       } catch (error) {
@@ -33,7 +41,9 @@ const Dashboard: React.FC = () => {
   const handleFilterChange = (category: string) => {
     const filtered = category === 'all'
       ? clothingItems
-      : clothingItems.filter(item => item.category === category);
+      : clothingItems.filter(
+          item => (item.category_detail?.name || '').toLowerCase() === category.toLowerCase()
+        );
     setFilteredItems(filtered);
   };
 
@@ -50,7 +60,7 @@ const Dashboard: React.FC = () => {
 
   const handleEdit = (id: number) => {
     console.log(`Edit item with id: ${id}`);
-    // Implement edit functionality here
+      navigate(`/edit-clothing/${id}`);
   };
 
   return (
@@ -59,17 +69,21 @@ const Dashboard: React.FC = () => {
       <Filter onFilterChange={handleFilterChange} />
       <Search onSearchChange={handleSearchChange} />
       <div className="clothing-items">
-        {filteredItems.map(item => (
+        {filteredItems.length === 0 ? (
+          <p>No clothing items found. Please add some items</p>
+        ) : (
+        filteredItems.map(item => (
           <ClothingItem
             key={item.id}
             id={item.id}
             name={item.name}
             description={item.description}
-            category={item.category}
+            category={item.category_detail}
             onDelete={handleDelete}
             onEdit={handleEdit}
           />
-        ))}
+        ))
+      )}
       </div>
     </div>
   );

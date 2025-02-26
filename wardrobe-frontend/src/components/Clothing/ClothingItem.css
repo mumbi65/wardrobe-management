@@ -1,32 +1,65 @@
 .clothing-item {
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.clothing-item h3 {
+  margin-top: 0;
+}
+
+.button-group {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button {
+  flex: 1;
+  padding: 10px;
+  background-color: #64B6AC; /* Theme color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover {
+  background-color: #50A197;
+}
+
+.delete-button {
+  flex: 1;
+  padding: 10px;
+  background-color: #e57373!important; /* Subtle red */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f!important; /* Darker red */
+}
+
+@media (max-width: 768px) {
+  .clothing-item {
+    padding: 15px;
   }
-  
   .clothing-item h3 {
-    margin-top: 0;
+    font-size: 1em;
   }
-  
-  .clothing-item button {
-    margin-right: 10px;
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+  .button-group {
+    flex-direction: column;
   }
-  
-  .clothing-item button:hover {
-    background-color: #0056b3;
+  .edit-button, .delete-button {
+    padding: 8px;
+    font-size: 0.9em;
   }
-  
-  .clothing-item button:last-child {
-    background-color: #dc3545;
-  }
-  
-  .clothing-item button:last-child:hover {
-    background-color: #c82333;
-  }
+}

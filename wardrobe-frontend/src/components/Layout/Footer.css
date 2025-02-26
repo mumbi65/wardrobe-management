@@ -1,14 +1,13 @@
 .footer {
-    background-color: #f8f9fa;
+    background-color: #222;
     padding: 20px;
     text-align: center;
-    position: fixed;
     width: 100%;
     bottom: 0;
-    border-top: 1px solid #e7e7e7;
+    position: fixed;
   }
   
   .footer p {
     margin: 0;
-    color: #6c757d;
+    color: #fff;
   }
