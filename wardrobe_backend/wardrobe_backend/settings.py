@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-f-7kuvue(q-eyqb_2z$nvfq(v!7f^+#gvjgeiyx-(^++bp%2yu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "wardrobe-backend-y3po.onrender.com",
+    "localhost:5173",
+    "127.0.0.1:8000",
+]
 
 
 # Application definition
