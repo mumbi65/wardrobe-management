@@ -9,24 +9,24 @@ Wardrobe is a full-stack web application that allows users to manage their cloth
 
 ## Tech Stack
 ### Frontend:
-- React (Vite + TypeScript)
-- Tailwind CSS
-- Axios (for API requests)
-- React Router
+1. React (Vite + TypeScript)
+2. CSS
+3. Axios (for API requests)
+4. React Router
 
 ### Backend:
-- Django (Django REST Framework)
-- PostgreSQL (Database)
-- Gunicorn (WSGI server for deployment)
-- Render (Hosting)
+1. Django (Django REST Framework)
+2. SQLite (Database)
+3. Gunicorn (WSGI server for deployment)
+4. Render (Hosting)
 
 
 ## Features
-- User authentication (login/register)
-- Add, update, and delete clothing items
-- Categorization of clothing items
-- API with CRUD functionality
-- Responsive UI
+1. User authentication (login/register)
+2. Add, update, and delete clothing items
+3. Categorization of clothing items
+4. API with CRUD functionality
+5. Responsive UI
 
 
 ## Setup Instructions
@@ -95,14 +95,14 @@ npm run dev
 
 ## API Endpoints
 ### Authentication
-- `POST /api/auth/register/` - Register a new user
-- `POST /api/auth/login/` - Log in a user
+1. `POST /api/auth/register/` - Register a new user
+2. `POST /api/auth/login/` - Log in a user
 
 ### Clothing Items
-- `GET /clothing-items/` - Fetch all clothing items
-- `POST /clothing-items/` - Add a new clothing item
-- `PUT /clothing-items/{id}/` - Update a clothing item
-- `DELETE /clothing-items/{id}/` - Delete a clothing item
+1. `GET /clothing-items/` - Fetch all clothing items
+2. `POST /clothing-items/` - Add a new clothing item
+3. `PUT /clothing-items/{id}/` - Update a clothing item
+4. `DELETE /clothing-items/{id}/` - Delete a clothing item
 
 ---
 
